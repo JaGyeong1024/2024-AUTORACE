@@ -1,0 +1,19 @@
+# catkin / ROS
+build/
+devel/
+install/
+log/
+.catkin_tools/
+.catkin_workspace
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Editors / OS
+.vscode/
+.idea/
+*.swp
+*~
+.DS_Store
