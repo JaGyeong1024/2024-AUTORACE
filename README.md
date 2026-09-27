@@ -1,49 +1,69 @@
-# 2024 AutoRace
+# AutoRace 2024 🏆 [교육부장관상](https://github.com/JaGyeong1024/JaGyeong1024/blob/main/assets/awards/2024-autorace.pdf) 수상 🏆
 
-2024 스케일카 자율주행 경진대회 출전 코드.  
-카메라와 2D LiDAR로 미션 구간을 인식하고, 각 미션 노드가 우선순위가 다른 `ackermann_cmd_mux` 입력으로 주행 명령을 보냅니다.
+<img src="docs/asset/readme/autorace-2024-poster.jpg" width="300" align="right" alt="AutoRace 2024 poster" />
 
-## Team
+**AutoRace 2024 — 2024 스케일카 자율주행 경진대회**
+
+- **일정**<br />시험주행 2024. 11. 20.(수) ~ 11. 21.(목), 본선 2024. 11. 22.(금)
+- **장소**<br />대구 EXCO 서관 1, 2 전시홀 미래자동차 컨소시엄 부스 (CO-SHOW 2024)
+- **참가 대학**<br />국민대, 계명대, 대림대, 선문대, 아주대, 인하대, 충북대
+- **플랫폼**<br />카메라, 라이다 센서가 장착된 1:10 스케일 자율주행자동차
+- **미션**<br />실외 트랙에서 차선 주행 및 장애물 인식 등 자율주행 미션, ROS 환경 알고리즘 개발
+- **주관**<br />국민대학교, COSS 첨단분야 혁신융합대학사업 미래자동차
+
+<br clear="right" />
+<br />
 
 <div align="center">
-<table align="center">
+<table>
 <tr>
-<td align="center" width="150">
-  <a href="https://github.com/a1038562"><img src="https://github.com/a1038562.png?size=200" width="100px;" alt=""/><br /><sub><b>이지원</b></sub></a>
+<td align="center" valign="top" width="150">
+  <a href="https://github.com/a1038562"><img src="https://github.com/a1038562.png?size=200" width="110" height="110" alt="" /></a><br />
+  <a href="https://github.com/a1038562"><b>이지원</b></a>
 </td>
-<td align="center" width="150">
-  <a href="https://github.com/tjsdn3065"><img src="https://github.com/tjsdn3065.png?size=200" width="100px;" alt=""/><br /><sub><b>김선우</b></sub></a>
+<td align="center" valign="top" width="150">
+  <a href="https://github.com/tjsdn3065"><img src="https://github.com/tjsdn3065.png?size=200" width="110" height="110" alt="" /></a><br />
+  <a href="https://github.com/tjsdn3065"><b>김선우</b></a>
 </td>
-<td align="center" width="150">
-  <a href="https://github.com/YSH-research"><img src="https://github.com/YSH-research.png?size=200" width="100px;" alt=""/><br /><sub><b>윤수한</b></sub></a>
+<td align="center" valign="top" width="150">
+  <a href="https://github.com/YSH-research"><img src="https://github.com/YSH-research.png?size=200" width="110" height="110" alt="" /></a><br />
+  <a href="https://github.com/YSH-research"><b>윤수한</b></a>
 </td>
-<td align="center" width="150">
-  <a href="https://github.com/ttaehyun"><img src="https://github.com/ttaehyun.png?size=200" width="100px;" alt=""/><br /><sub><b>유태현</b></sub></a>
+<td align="center" valign="top" width="150">
+  <a href="https://github.com/ttaehyun"><img src="https://github.com/ttaehyun.png?size=200" width="110" height="110" alt="" /></a><br />
+  <a href="https://github.com/ttaehyun"><b>유태현</b></a>
 </td>
-<td align="center" width="150">
-  <a href="https://github.com/JaGyeong1024"><img src="https://avatars.githubusercontent.com/u/92356313?s=400&u=9df94c6f0e773e86773cb4fcc379f1204a7dcff7&v=4" width="100px;" alt=""/><br /><sub><b>구자경</b></sub></a>
+<td align="center" valign="top" width="150">
+  <a href="https://github.com/JaGyeong1024"><img src="https://github.com/JaGyeong1024.png?size=200" width="110" height="110" alt="" /></a><br />
+  <a href="https://github.com/JaGyeong1024"><b>구자경</b></a>
 </td>
 </tr>
 </table>
 </div>
 
+<br />
+
+## 프로젝트 개요
+
+카메라와 2D 라이다로 미션 구간을 인식하고, 각 미션 노드가 우선순위가 다른 `ackermann_cmd_mux` 입력으로 주행 명령을 보냅니다.
+
 ## Missions
 
 | Mission | Sensor | Behavior | Node |
 |---|---|---|---|
-| 차선 주행 | Camera | 버드아이뷰 변환 후 슬라이딩 윈도우로 차선 추종 | `lane_main.py` |
-| 차단기 | LiDAR | 차단기를 감지하면 정지, 올라가면 출발. 벽 등 다른 장애물에는 반응하지 않음 | `barricade_detector.py` |
-| 라바콘 | LiDAR | `obstacle_detector` 장애물로 좌우 콘 사이 중앙 경로 추종 | `rubber_cone.py` |
-| 터널 | LiDAR | 좌우 벽 거리 PID 주행 | `tunnel.py` |
-| 빨간 노면 | Camera | 빨간 노면 구간에서 감속 | `red_road_node` |
-| 횡단보도 | Camera | 정지선 검출 시 5초 정지 후 출발 | `crosswalk.py` |
-| A/B 갈림길 | Camera (AR 마커) | AR 마커 ID로 좌/우 진행 방향 결정 | `choice_AB.py` |
-| 회전교차로 | LiDAR | 회전 차량 클러스터의 이동 방향으로 주행 방향 플래그(`/direction_flag`) 결정 | `round_about_node`, `arrow_cluster_node` |
-| 주차 | Camera | 주차 구역 검출 후 전진·후진 시퀀스 | `parking_rect.py` |
+| Lane following | Camera | Bird's-eye view warp, sliding window lane fitting | `lane_main.py` |
+| Barricade | LiDAR | Stops when the barricade is down and starts when it lifts; ignores walls and other obstacles | `barricade_detector.py` |
+| Rubber cone | LiDAR | Follows the center path between left and right cones from `obstacle_detector` | `rubber_cone.py` |
+| Tunnel | LiDAR | PID steering on left and right wall distances | `tunnel.py` |
+| Red road | Camera | Slows down on the red road section | `red_road_node` |
+| Crosswalk | Camera | Stops for 5 s at the stop line, then continues | `crosswalk.py` |
+| A/B choice | Camera (AR marker) | Picks the left or right lane from the AR marker ID | `choice_AB.py` |
+| Roundabout | LiDAR | Sets the direction flag (`/direction_flag`) from the motion of the circulating vehicle cluster | `round_about_node`, `arrow_cluster_node` |
+| Parking | Camera | Detects the parking spot, then runs a forward/reverse sequence | `parking_rect.py` |
 
 ## Command Priority
 
-모든 미션 노드는 `racecar`의 `high_level/ackermann_cmd_mux`에 입력을 보냅니다. 여러 입력이 동시에 들어오면 우선순위가 높은 명령이 선택됩니다 (`catkin_ws/src/racecar/racecar/config/racecar-v2/high_level_mux.yaml`).
+Every mission node publishes to `high_level/ackermann_cmd_mux` in `racecar`. When several inputs are active, the one with the highest priority wins (`catkin_ws/src/racecar/racecar/config/racecar-v2/high_level_mux.yaml`).
 
 | Input | Priority | Node |
 |---|---|---|
@@ -59,8 +79,8 @@
 
 | Path | Contents |
 |---|---|
-| `catkin_ws/` | 차량 기본 스택: 센서 드라이버, VESC, ackermann mux, 텔레옵 |
-| `webot_ws/` | 대회 미션 패키지 |
+| `catkin_ws/` | Vehicle base stack: sensor drivers, VESC, ackermann mux, teleop |
+| `webot_ws/` | Competition mission packages |
 
 ## Packages
 
@@ -68,25 +88,25 @@
 
 | Package | Role |
 |---|---|
-| `lane_detection` | 차선 주행 및 카메라·LiDAR 미션 노드, 전체 실행 launch (`start.launch`) |
-| `barricade_detector` | 차단기 감지 |
-| `red_road` | 빨간 노면 감지 |
-| `roundAboutNav` | 회전교차로 LiDAR 클러스터링 및 진입 판단 |
-| `image_undistort_pkg` | 카메라 왜곡 보정 (`/usb_cam/image_raw` → `/usb_cam/image_raw/calib`) |
-| `ar_track_alvar` | AR 마커 인식 |
+| `lane_detection` | Lane following and camera/LiDAR mission nodes, full launch (`start.launch`) |
+| `barricade_detector` | Barricade detection |
+| `red_road` | Red road detection |
+| `roundAboutNav` | Roundabout LiDAR clustering and direction flag |
+| `image_undistort_pkg` | Camera undistortion (`/usb_cam/image_raw` → `/usb_cam/image_raw/calib`) |
+| `ar_track_alvar` | AR marker tracking |
 
 `catkin_ws/src`:
 
 | Package | Role |
 |---|---|
-| `racecar` | 차량 bringup, `ackermann_cmd_mux` |
-| `vesc` | VESC 모터 드라이버 |
-| `rplidar_ros` | RPLiDAR 드라이버 |
-| `usb_cam` | USB 카메라 드라이버 |
-| `razor_imu_9dof` | IMU 드라이버 |
-| `obstacle_detector` | LiDAR 장애물 추출 (`/raw_obstacles`) |
-| `fiducials`, `image_pipeline` | 마커 인식, 카메라 캘리브레이션 |
-| `wego` | 텔레옵, 센서 확인용 rviz launch |
+| `racecar` | Vehicle bringup, `ackermann_cmd_mux` |
+| `vesc` | VESC motor driver |
+| `rplidar_ros` | RPLiDAR driver |
+| `usb_cam` | USB camera driver |
+| `razor_imu_9dof` | IMU driver |
+| `obstacle_detector` | LiDAR obstacle extraction (`/raw_obstacles`) |
+| `fiducials`, `image_pipeline` | Fiducial marker detection, camera calibration |
+| `wego` | Teleop and sensor view rviz launch |
 
 ## Build
 
@@ -100,6 +120,6 @@ cd ../webot_ws && catkin_make && source devel/setup.bash
 ## Run
 
 ```bash
-roslaunch wego teleop.launch              # 차량 bringup (VESC, RPLiDAR, USB 카메라, mux, 조이스틱)
-roslaunch lane_detection start.launch     # 전체 미션 노드
+roslaunch wego teleop.launch              # vehicle bringup (VESC, RPLiDAR, USB camera, mux, joystick)
+roslaunch lane_detection start.launch     # all mission nodes
 ```
